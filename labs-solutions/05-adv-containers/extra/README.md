@@ -60,5 +60,3 @@ All examples use realistic scientific and engineering scenarios:
 - Research team collaboration
 - Experimental data analysis
 - Equipment tracking and maintenance
-
-This makes the exercises relevant and engaging for students in engineering and scientific fields.

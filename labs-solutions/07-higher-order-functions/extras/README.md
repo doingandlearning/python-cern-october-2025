@@ -104,5 +104,3 @@ All examples use realistic scientific and engineering scenarios:
 - **Can access outer function variables** - closure behavior
 - **Use `nonlocal`** to modify outer function variables
 - **Great for encapsulation** and data hiding
-
-This makes the exercises relevant and engaging for students in engineering and scientific fields while teaching practical programming concepts they'll use throughout their careers.
