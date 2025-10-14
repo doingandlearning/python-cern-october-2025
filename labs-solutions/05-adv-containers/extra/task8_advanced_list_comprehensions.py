@@ -20,10 +20,21 @@ for measurement in measurements:
 
 # Create a list of just the sensor names
 sensor_names = [measurement[0] for measurement in measurements]
+sensor_names = [name for name, _, _ in measurements] # (sensor, reading, type)
 print(f"\nSensor names: {sensor_names}")
 
 # Create a list of just the values
 values = [measurement[1] for measurement in measurements]
+values = [reading for _, reading, _ in measurements]
+
+values = []
+for measurement in measurements:
+    values.append(measurement[1])
+
+values = []
+for _, reading, _ in measurements:
+    values.append(reading)
+
 print(f"Sensor values: {values}")
 
 # Create a list of names of temperature sensors
