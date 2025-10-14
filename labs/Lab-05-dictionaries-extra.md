@@ -221,39 +221,4 @@ measurements = [
 
 ---
 
-## **What to Submit**
-
-Create a Python file called `lab05_extra.py` with your solutions. For each task, write the code and include comments explaining what you're doing.
-
-**Example structure:**
-```python
-# Lab 05 Extra: Practice with Dictionaries, Sets, and List Comprehensions for Engineers and Scientists
-
-# Task 1: Experimental Data Logger
-print("=" * 40)
-print("Task 1: Experimental Data Logger")
-print("=" * 40)
-
-sensor_readings = {
-    "Sensor_A": 23.5,
-    "Sensor_B": 24.1,
-    "Sensor_C": 22.8,
-    "Sensor_D": 25.2,
-    "Sensor_E": 23.9
-}
-
-# Your code here...
-
-# Task 2: Laboratory Inventory
-print("\n" + "=" * 40)
-print("Task 2: Laboratory Inventory")
-print("=" * 40)
-
-inventory = {}
-
-# Your code here...
-
-# Continue for all tasks...
-```
-
 **Good luck and have fun practicing with dictionaries, sets, and list comprehensions in scientific contexts!**
