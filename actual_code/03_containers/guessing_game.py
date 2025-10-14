@@ -4,6 +4,7 @@ MAX_NUMBER_OF_GUESSES = 4
 keep_going = True
 
 while True:
+    guess_history = []
     number_to_guess = random.randint(1, 10)
     number_of_guesses = 0
     guessed_correctly = False
@@ -23,20 +24,35 @@ while True:
             print("Out of range, try again.")
             continue
 
+
+
         number_of_guesses += 1
 
         if user_guess == number_to_guess:
-            print("Congratulations, you guessed it!")
+            message = "Congratulations, you guessed it!"
+            guess_history.append((user_guess, message))
             guessed_correctly = True
             break
         elif user_guess > number_to_guess:
-            print("Too high!")
+            message = "Too high!"
         elif user_guess < number_to_guess:
-            print("Too low!")
+            message = "Too low!"
+
+        print(message)
+        guess_history.append((user_guess, message))
 
         if number_of_guesses == MAX_NUMBER_OF_GUESSES:
             break
 
+    print(f"Your guesses were {guess_history}.")
+
+
+    tuple1 = ("Geneva", "Zurich", "Bern")
+
+    city1, city2, city3 = tuple1
+
+    for index, guess in enumerate(guess_history):
+        print(f"Guess #{index + 1} was {guess[0]} and the message was {guess[1]}")
 
     if guessed_correctly:
         print(f"You guessed the number {number_to_guess} in {number_of_guesses} guesses.")
