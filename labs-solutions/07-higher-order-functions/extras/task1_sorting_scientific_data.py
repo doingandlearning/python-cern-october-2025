@@ -72,6 +72,82 @@ print("\nMulti-criteria sort (result desc, temp asc, pressure desc):")
 for exp in multi_criteria:
     print(f"  {exp[0]}: Result={exp[3]}, Temp={exp[1]}°C, Pressure={exp[2]}kPa")
 
+
+# Alternative approach - to use a standard score/weighted sum
+print("\n" + "=" * 50)
+print("Alternative Approach: Standard Score/Weighted Sum")
+print("=" * 50)
+
+import statistics
+
+def calculate_standard_scores(data, metric_index):
+    """Calculate z-scores for a given metric across all experiments."""
+    values = [exp[metric_index] for exp in data]
+    mean_val = statistics.mean(values)
+    std_val = statistics.stdev(values) if len(values) > 1 else 1
+    
+    return [(val - mean_val) / std_val for val in values]
+
+def create_weighted_score(experiments, weights):
+    """
+    Create a weighted composite score using standardized values.
+    weights: dict with metric indices as keys and weights as values
+    """
+    # Calculate standard scores for each metric
+    std_scores = {}
+    for metric_idx in weights.keys():
+        std_scores[metric_idx] = calculate_standard_scores(experiments, metric_idx)
+    
+    # Create weighted composite scores
+    weighted_scores = []
+    for i, exp in enumerate(experiments):
+        composite_score = 0
+        for metric_idx, weight in weights.items():
+            composite_score += std_scores[metric_idx][i] * weight
+        weighted_scores.append((exp, composite_score))
+    
+    return weighted_scores
+
+# Define weights for different metrics
+# Positive weights mean higher values are better, negative weights mean lower values are better
+weights_scenarios = {
+    "High Result, Low Temperature": {3: 1.0, 1: -0.5, 2: 0.2},  # Result good, temp bad, pressure slightly good
+    "Balanced Performance": {3: 0.4, 1: -0.3, 2: 0.3},         # Balanced approach
+    "Result Focused": {3: 1.0, 1: 0.0, 2: 0.0},                # Only care about result
+    "Efficiency Focused": {3: 0.6, 1: -0.4, 2: 0.0},           # Result per temperature
+}
+
+print("Original experimental data:")
+for exp in experiments:
+    print(f"  {exp[0]}: Temp={exp[1]}°C, Pressure={exp[2]}kPa, Result={exp[3]}")
+
+# Calculate and display standard scores
+print(f"\nStandard Scores (z-scores):")
+temp_scores = calculate_standard_scores(experiments, 1)
+pressure_scores = calculate_standard_scores(experiments, 2)
+result_scores = calculate_standard_scores(experiments, 3)
+
+for i, exp in enumerate(experiments):
+    print(f"  {exp[0]}: Temp_z={temp_scores[i]:.3f}, Pressure_z={pressure_scores[i]:.3f}, Result_z={result_scores[i]:.3f}")
+
+# Apply different weighting scenarios
+for scenario_name, weights in weights_scenarios.items():
+    print(f"\n{scenario_name} (weights: {weights}):")
+    weighted_scores = create_weighted_score(experiments, weights)
+    
+    # Sort by weighted score (descending)
+    sorted_by_weight = sorted(weighted_scores, key=lambda x: x[1], reverse=True)
+    
+    for exp, score in sorted_by_weight:
+        print(f"  {exp[0]}: Score={score:.3f} (Result={exp[3]}, Temp={exp[1]}°C, Pressure={exp[2]}kPa)")
+
+# Advanced: Interactive weight adjustment
+print(f"\nAdvanced: Custom Weight Adjustment")
+print("You can modify the weights dictionary to experiment with different priorities:")
+print("weights = {3: 1.0, 1: -0.5, 2: 0.2}  # Result=1.0, Temp=-0.5, Pressure=0.2")
+print("Negative weights for temperature mean lower temperatures are preferred")
+print("Positive weights mean higher values are preferred")
+
 print("\n" + "=" * 50)
 print("Task 1 completed successfully!")
 print("=" * 50)
