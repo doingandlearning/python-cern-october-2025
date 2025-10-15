@@ -19,11 +19,14 @@ try:
     def get_batch_size(file, start=0, batch_size=2):
         file.seek(0)
         for _ in range(start * batch_size):
-            file.readline()
+            if not file.readline():
+                return []  # handles getting to the end of file
 
         output = []
         for _ in range(batch_size):
-            output.append(file.readline())
+            line = file.readline()
+            if line is not None:
+                output.append(line)
 
         return output
 
