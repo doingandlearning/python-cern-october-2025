@@ -1,4 +1,4 @@
-import time
+from time import sleep
 import random
 from threading import Thread
 import datetime
@@ -9,14 +9,14 @@ current_state = {
 
 def door_sensor(sensor_id, check_interval=2):
     for _ in range(5):
-        time.sleep(check_interval)
+        sleep(check_interval)
         door_state = random.choice(["open", "closed"])
         current_state[sensor_id] = door_state
     print(f"[{sensor_id}] is deactivated")
 
 def log_printer():
     while True:
-        time.sleep(2)
+        sleep(2)
         print("=" * 20)
         print(f"{datetime.datetime.now()}")
         for sensor, state in current_state.items():
