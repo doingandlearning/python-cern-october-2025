@@ -1,5 +1,5 @@
 with open("movies.csv", "r", newline="") as file:
-    file.seek(10)
+    file.seek(-10, 2)
 
     print(file.tell())
 
